@@ -3,6 +3,12 @@
   <h1> Maze </h1>
   <p> Let's solve it. </p>
   
+  <div>
+    <a href="">
+      <img src="https://img.shields.io/badge/Creation_Date-May%202023-brightgreen" alt="Creation" />
+    </a>
+  </div>
+
 </div>  
 
 <br/>
