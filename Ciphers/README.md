@@ -20,7 +20,7 @@ This app contains multiple ciphers. With each cipher you can test how cipher dec
 
 <div>
   <a>
-    <img src="https://img.shields.io/badge/-CSharp-2E8B57?logo=csharp" />
+    <img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white&style=flat" />
   </a>
 </div>
 
