@@ -15,6 +15,8 @@
 
 ### About 
 
+Task is part of Object-Oriented Design Course on AGH in 2023.
+
 Problem is creating simple mazes with walls, doors and custom implementation of this objects that has it's own mechanics.
 Problem idea is to learn how to implement few Design Patterns like: singleton, AbstractFactory and Builder. Application of this design patters provided us soultion that is easy extensible for new element typs like more implementation of doors.
 
