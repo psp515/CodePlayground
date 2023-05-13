@@ -24,7 +24,7 @@ public class Ui {
 		Cargo nikeShirt = new Cargo(250, "Nike T-Shirt S");
 
 		item.addSubcategory(boots);
-		item.addSubcategory(nike);
+		item.addSubcategory(shirt);
 
 		boots.addSubcategory(newBalance);
 		boots.addSubcategory(nike);

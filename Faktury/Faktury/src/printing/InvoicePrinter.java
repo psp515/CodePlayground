@@ -31,7 +31,7 @@ public abstract class InvoicePrinter {
     }
 
     private void printFooter(Invoice invoice) {
-        System.out.println("=====================================================");
         System.out.println("Na kwote: " + invoice.getTotal());
+        System.out.println("=====================================================");
     }
 }
