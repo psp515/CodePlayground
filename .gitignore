@@ -396,3 +396,43 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Gradle files
+.gradle/
+build/
+
+# IntelliJ IDEA files
+.idea/
+
+# Eclipse files
+.settings/
+bin/
+*.class
+
+# Compiled Gradle Plugins
+buildSrc/build/
+
+# User-specific files
+*.iml
+*.ipr
+*.iws
+*.log
+*.log.*
+*.DS_Store
+
+# Miscellaneous
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Local configuration file (e.g., gradle.properties)
+gradle.properties
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
