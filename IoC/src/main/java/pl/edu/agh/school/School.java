@@ -1,14 +1,16 @@
 package pl.edu.agh.school;
 
+import com.google.inject.Inject;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class School {
 
     private SchoolDAO schoolDAO;
-
-    public School() {
-        this.schoolDAO = new SchoolDAO();
+    @Inject
+    public School(SchoolDAO dao) {
+        this.schoolDAO = dao;
     }
 
     public void addTeacher(Teacher teacher) {

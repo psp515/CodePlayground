@@ -4,25 +4,38 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import jdk.jfr.Name;
 import pl.edu.agh.logger.Logger;
 import pl.edu.agh.school.SchoolClass;
 import pl.edu.agh.school.Teacher;
+import pl.edu.agh.school.interfaces.ClassStorageFileName;
+import pl.edu.agh.school.interfaces.TeachersStorageFileName;
 
 public final class SerializablePersistenceManager implements ISerializablePersistenceManager {
 
-    private static final Logger log = Logger.getInstance();
+    private final Logger log;
 
     private String teachersStorageFileName;
 
     private String classStorageFileName;
 
-    public SerializablePersistenceManager() {
-        setTeachersStorageFileName("teachers.dat");
-        setClassStorageFileName("classes.dat");
+    @Inject
+    public SerializablePersistenceManager(Logger logger,
+                                          @TeachersStorageFileName String tsfn,
+                                          @ClassStorageFileName String csfn) {
+        setTeachersStorageFileName(tsfn);
+        setClassStorageFileName(csfn);
+        log = logger;
     }
 
     public void setTeachersStorageFileName(String teachersStorageFileName) {
         this.teachersStorageFileName = teachersStorageFileName;
+    }
+
+    public Logger getLogger() {
+        return log;
     }
 
     public void setClassStorageFileName(String classStorageFileName) {

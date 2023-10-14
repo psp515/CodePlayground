@@ -33,6 +33,8 @@ public class LessonTest {
 
 	@Test
 	public void testGetDate() {
+		// Test is unstable
+
 		assertNotNull(lesson.getDate());
 		// check if date is not in the future
 		assertFalse(lesson.getDate().before(Calendar.getInstance()));
