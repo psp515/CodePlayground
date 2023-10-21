@@ -436,3 +436,5 @@ gradle.properties
 .DS_Store
 Thumbs.db
 
+*.jpeg
+*.pptx
