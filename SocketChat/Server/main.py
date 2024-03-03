@@ -2,6 +2,7 @@ import socket
 import threading
 import json
 
+
 class ChatServer:
     def __init__(self, host, port):
         self.host = host
