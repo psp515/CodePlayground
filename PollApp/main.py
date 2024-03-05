@@ -23,21 +23,46 @@ class Poll:
         self.owner = user
         self.votes = {}
 
-    def add_vote(self, user: str, choice: str):
+    def update_vote(self, user: str, choice: str):
         self.votes[user] = choice
+        return True
+
+    def add_vote(self, user: str, choice: str):
+        if user in self.votes:
+            return False
+
+        self.votes[user] = choice
+        return True
 
     def remove_vote(self, user: str):
         if user in self.votes:
             self.votes.pop(user)
 
+    def get_user_vote(self, user: str):
+        return self.votes.get(user, None)
+
     def get_results(self) -> dict:
         results = {}
         for vote in self.votes.values():
             results[vote] = results.get(vote, 0) + 1
-        return results
+        payload = self.get_poll()
+        payload["voteCount"] = results
+        return payload
+
+    def get_poll(self) -> dict:
+        return {
+            "question": self.question,
+            "votes": len(self.votes),
+        }
 
 
-@app.post("/poll/create/")
+@app.get("/polls")
+async def get_polls():
+    data = [x.get_poll() for x in polls.values()]
+    return {"polls": data }
+
+
+@app.post("/polls")
 async def create_poll(user: str, question: str):
     if question in polls:
         raise HTTPException(status_code=400, detail="Poll already exists")
@@ -45,34 +70,7 @@ async def create_poll(user: str, question: str):
     polls[question] = Poll(user, question)
     return {"message": "Poll created successfully"}
 
-
-@app.put("/poll/{question}/vote/")
-async def vote(question: str, user: str, vote: str):
-    if question not in polls:
-        raise HTTPException(status_code=404, detail="Poll does not exist")
-    poll = polls[question]
-    poll.add_vote(user, vote)
-    return {"message": "Vote casted successfully"}
-
-
-@app.delete("/poll/{question}/vote/")
-async def vote(question: str, user: str):
-    if question not in polls:
-        raise HTTPException(status_code=404, detail="Poll does not exist")
-    poll = polls[question]
-    poll.remove_vote(user)
-    return {"message": "Vote removed successfully"}
-
-
-@app.get("/poll/{question}/results/")
-async def get_results(question: str):
-    if question not in polls:
-        raise HTTPException(status_code=404, detail="Poll does not exist")
-    poll = polls[question]
-    return poll.get_results()
-
-
-@app.delete("/poll/{question}/delete/")
+@app.delete("/polls/{question}")
 async def delete_poll(user: str, question: str):
     if question not in polls:
         raise HTTPException(status_code=404, detail="Poll does not exist")
@@ -84,3 +82,52 @@ async def delete_poll(user: str, question: str):
 
     del polls[question]
     return {"message": "Poll deleted successfully"}
+
+@app.get("/polls/{question}")
+async def get_results(question: str):
+    if question not in polls:
+        raise HTTPException(status_code=404, detail="Poll does not exist")
+    poll = polls[question]
+    return poll.get_results()
+
+@app.post("/polls/{question}/votes")
+async def vote(question: str, user: str, vote: str):
+    if question not in polls:
+        raise HTTPException(status_code=404, detail="Poll does not exist")
+    poll = polls[question]
+    result = poll.add_vote(user, vote)
+
+    if not result:
+        return { "message": "User is not allowed to vote second time." }
+
+    return {"message": "Vote casted successfully"}
+
+@app.delete("/polls/{question}/votes/{user}")
+async def vote(question: str, user: str):
+    if question not in polls:
+        raise HTTPException(status_code=404, detail="Poll does not exist")
+    poll = polls[question]
+    poll.remove_vote(user)
+    return {"message": "Vote removed successfully"}
+
+
+@app.get("/polls/{question}/votes/{user}")
+async def vote(question: str, user: str):
+    if question not in polls:
+        raise HTTPException(status_code=404, detail="Poll does not exist")
+    poll = polls[question]
+    result = poll.get_user_vote(user)
+
+    if result is None:
+        return {"message": "User dit not voted for it"}
+
+    return {"value": result}
+
+@app.put("/polls/{question}/votes/{user}")
+async def vote(question: str, user: str, vote: str):
+    if question not in polls:
+        raise HTTPException(status_code=404, detail="Poll does not exist")
+    poll = polls[question]
+    poll.update_vote(user, vote)
+
+    return {"message": "Update vote successfully."}
