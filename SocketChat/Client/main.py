@@ -18,13 +18,17 @@ class ChatClient:
         self._send_thread = None
         self._receive_m_thread = None
 
-        m_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
-        m_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        m_socket.bind(('', self.m_port))
-        mreq = struct.pack('4sL', socket.inet_aton(self.m_host), socket.INADDR_ANY)
-        m_socket.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
+        try:
+            m_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+            m_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            m_socket.bind(('', self.m_port))
+            mreq = struct.pack('4sL', socket.inet_aton(self.m_host), socket.INADDR_ANY)
+            m_socket.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 
-        self.m_socket = m_socket
+            self.m_socket = m_socket
+        except Exception as e:
+            self.m_socket = None
+            print("Exception when handling multicast")
 
     def receive_messages(self):
         while True:
@@ -92,7 +96,9 @@ class ChatClient:
                 break
 
     def receive_m_messages(self):
-
+        if self.m_socket == None:
+            print("Failed to start multicast")
+            return
         while True:
             try:
                 message = self.m_socket.recv(2048).decode('utf-8')
