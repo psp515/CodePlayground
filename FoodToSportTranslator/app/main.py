@@ -155,7 +155,7 @@ async def meal_form():
 
 
 @calculation_router.get("/calculation/result/raw")
-async def meal_results(name: str = "rice",
+async def meal_results_raw(name: str = "rice",
                        quantity: int = 1,
                        unit: str = "cup",
                        activity: str = "skiing",
@@ -163,7 +163,10 @@ async def meal_results(name: str = "rice",
     global CSRF_TOKENS_STORE
 
     if csrf not in CSRF_TOKENS_STORE:
-        return HTMLResponse(content=forbidden(), status_code=status.HTTP_403_FORBIDDEN)
+        json_message = {
+            "message": "Invalid csrf token"
+        }
+        return JSONResponse(content=json_message, status_code=status.HTTP_403_FORBIDDEN)
 
     CSRF_TOKENS_STORE.remove(csrf)
 
