@@ -1,0 +1,196 @@
+{
+	"info": {
+		"_postman_id": "f5f88a5b-10f6-466a-9abb-c003611ec49e",
+		"name": "RequestsExamples",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "17020039"
+	},
+	"item": [
+		{
+			"name": "NinjaApiRequest",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Api-Key",
+						"value": "KeNJnT8ZxnJOHONW4ystxQ==NUt0XMTqpMFKAR4F",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.api-ninjas.com/v1/caloriesburned?activity=skiing",
+					"protocol": "https",
+					"host": [
+						"api",
+						"api-ninjas",
+						"com"
+					],
+					"path": [
+						"v1",
+						"caloriesburned"
+					],
+					"query": [
+						{
+							"key": "activity",
+							"value": "skiing"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EdamamApiRequest",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.edamam.com/api/nutrition-data?app_id=d208c114&app_key=03d0b80511a17b6696737286bdf62745&ingr=1 cup rice",
+					"protocol": "https",
+					"host": [
+						"api",
+						"edamam",
+						"com"
+					],
+					"path": [
+						"api",
+						"nutrition-data"
+					],
+					"query": [
+						{
+							"key": "app_id",
+							"value": "d208c114"
+						},
+						{
+							"key": "app_key",
+							"value": "03d0b80511a17b6696737286bdf62745"
+						},
+						{
+							"key": "ingr",
+							"value": "1 cup rice"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Csrf",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://0.0.0.0:8000/security/csrf/raw"
+			},
+			"response": []
+		},
+		{
+			"name": "Welcome",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://0.0.0.0:8000"
+			},
+			"response": []
+		},
+		{
+			"name": "HtmlForm",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://0.0.0.0:8000/calculation/form"
+			},
+			"response": []
+		},
+		{
+			"name": "HtmlResponse",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8000/calculation/result?name=rice&quantity=1&unit=cup&activity=skiing&csrf=7bf5409ed6a968a71a4a98a87c2dc77dd65486d745093330af5ccf3545110d73",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"calculation",
+						"result"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "rice"
+						},
+						{
+							"key": "quantity",
+							"value": "1"
+						},
+						{
+							"key": "unit",
+							"value": "cup"
+						},
+						{
+							"key": "activity",
+							"value": "skiing"
+						},
+						{
+							"key": "csrf",
+							"value": "7bf5409ed6a968a71a4a98a87c2dc77dd65486d745093330af5ccf3545110d73"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RawResponse",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://0.0.0.0:8000/calculation/result/raw?name=rice&quantity=1&unit=cup&activity=skiing&csrf=b308a304b36a14f1a2b3916ba78bc0e4c5e37997ae6ce8fcad40464a7825c79b",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"calculation",
+						"result",
+						"raw"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "rice"
+						},
+						{
+							"key": "quantity",
+							"value": "1"
+						},
+						{
+							"key": "unit",
+							"value": "cup"
+						},
+						{
+							"key": "activity",
+							"value": "skiing"
+						},
+						{
+							"key": "csrf",
+							"value": "b308a304b36a14f1a2b3916ba78bc0e4c5e37997ae6ce8fcad40464a7825c79b"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

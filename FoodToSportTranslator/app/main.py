@@ -2,20 +2,6 @@ from fastapi import FastAPI, APIRouter
 from starlette import status
 from starlette.responses import HTMLResponse, JSONResponse
 import secrets
-import json
-import os
-
-# Get the current working directory
-current_directory = os.getcwd()
-
-# List files in the current directory
-files_in_directory = os.listdir(current_directory)
-
-# Print the list of files
-print("Files in the current directory:")
-for file in files_in_directory:
-    print(file)
-
 
 from ninja_api import NinjaApi
 from edamam_api import EdamamApi
@@ -37,6 +23,7 @@ async def root():
             "GET /calculation/result": "Get the result of the calculation",
             "GET /calculation/result/raw": "Get the raw result of the calculation",
             "GET /security/csrf": "Get the CSRF token",
+            "GET /security/csrf/raw": "Get the CSRF token raw",
             "GET /": "Welcome message and endpoints list",
             "GET /docs": "API documentation",
         }
