@@ -1,0 +1,104 @@
+﻿@page "/counter"
+@using Microsoft.AspNetCore.SignalR.Client
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter @welcome</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+
+<br />
+<p>Connect to datacenter:</p>
+<input type="text" @bind="datacentername" />
+<br />
+<button class="btn btn-primary" @onclick="Connect">Send Data</button>
+
+<br />
+<br />
+<br />
+<br />
+<p>Send message on topic to datacenter:</p>
+<input type="text" @bind="datacentername" />
+<p>Topic:</p>
+<input type="text" @bind="topic" />
+<p>Message:</p>
+<input type="text" @bind="message" />
+<br />
+<button class="btn btn-primary" @onclick="SendDataToHub">Send Data</button>
+
+<br />  
+<br />
+<br />
+<br />
+<p>Messages from the server:</p>
+<ul>
+    @foreach (var message in Messages)
+    {
+        <li>@message</li>
+    }
+</ul>
+
+@code {
+    private int currentCount = 0;
+    private string message, datacentername, topic, welcome;
+    public List<string> Messages { get; set; } = new List<string>();
+    private HubConnection hubConnection;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+    public Counter()
+    {
+        hubConnection = new HubConnectionBuilder()
+                .WithUrl("https://localhost:7071/datacenter")
+                .Build();
+
+        hubConnection.On<string, string, string>("Message", (x, y, z) =>
+        {
+            Messages.Add(x + ":" + y + ":" + z);
+            StateHasChanged();
+        });
+
+        hubConnection.On<string>("WelcomeRequest", (x) =>
+        {
+            welcome = x;
+            StateHasChanged();
+        });
+
+        Task.Run(async () =>
+        {
+            await hubConnection.StartAsync();
+        });
+    }
+
+    private async Task Connect()
+    {
+        if (hubConnection.State == HubConnectionState.Connected)
+        {
+            object[] data = { datacentername };
+            await hubConnection.SendCoreAsync("Connect", data);
+        }
+        else
+        {
+            Console.WriteLine("Why not connected");
+        }
+    }
+
+    private async Task SendDataToHub()
+    {
+        if (hubConnection.State == HubConnectionState.Connected)
+        {
+            object[] data = { datacentername, topic, message };
+            await hubConnection.SendCoreAsync("GetMessage", data);
+        }
+        else
+        {
+            Console.WriteLine("Why not connected");
+        }
+    }
+}
